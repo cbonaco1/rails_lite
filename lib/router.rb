@@ -2,6 +2,10 @@ class Route
   attr_reader :pattern, :http_method, :controller_class, :action_name
 
   def initialize(pattern, http_method, controller_class, action_name)
+    @pattern = pattern
+    @http_method = http_method
+    @controller_class = controller_class
+    @action_name = action_name
   end
 
   # checks if pattern matches path and method matches request method
@@ -18,10 +22,12 @@ class Router
   attr_reader :routes
 
   def initialize
+    @routes = []
   end
 
   # simply adds a new route to the list of routes
   def add_route(pattern, method, controller_class, action_name)
+    @routes << Route.new(pattern, method, controller_class, action_name)
   end
 
   # evaluate the proc in the context of the instance
