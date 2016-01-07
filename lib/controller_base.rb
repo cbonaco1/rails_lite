@@ -25,7 +25,7 @@ class ControllerBase
     @res.status = 302
     @res["Location"] = url
     @already_built_response = true
-    session.store_session(res)
+    session.store_session(@res)
   end
 
   # Populate the response with content.
@@ -36,6 +36,7 @@ class ControllerBase
     @res["Content-Type"] = content_type
     @res.write(content) #write sets body attribute as well
     @already_built_response = true
+    session.store_session(@res)
   end
 
   # use ERB and binding to evaluate templates
@@ -50,7 +51,6 @@ class ControllerBase
     result = template.result(binding)
     render_content(result, 'text/html')
     # byebug
-    session.store_session(res)
   end
 
   # method exposing a `Session` object
